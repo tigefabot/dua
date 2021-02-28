@@ -1,19 +1,19 @@
 container:
   image: "registry.gitlab.com/tigefa/ffmpeg"
-  cpu: 8
-  memory: 21
+  cpu: 16
+  memory: 32
 
 ffmpeg_task:
   timeout_in: 120m
-  install_script:
+  requirements_script:
     - apt-get update
     - apt-get dist-upgrade -yqq
     - apt-get install -yqq sudo lsb-base lsb-release apt-transport-https ca-certificates software-properties-common wget curl netcat aria2 whois figlet p7zip p7zip-full zip unzip
     - apt-get install -yqq wget aria2 ffmpeg telnet tree
-  test_script:
-#    - aria2c --bt-seed-unverified=true --seed-time=1 --seed-ratio=1.0 "https://yts.mx/torrent/download/A1D0C3B0FD52A29D2487027E6B50F27EAF4912C5"
-    - "aria2c --check-certificate=false --header 'Host: de15.seedr.cc' --user-agent 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:81.0) Gecko/20100101 Firefox/81.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' --header 'Accept-Language: id,en-US;q=0.7,en;q=0.3' --referer 'https://www.seedr.cc/files/146653900' --header 'Upgrade-Insecure-Requests: 1' 'https://de15.seedr.cc/ff_get/767703990/Captain.America.The.Winter.Soldier.2014.720p.BluRay.x264.YIFY.mp4?st=eMqkpn65nsflSdStlJLWRw&e=1603043522' --out 'Captain.America.The.Winter.Soldier.2014.720p.BluRay.x264.YIFY.mp4'"
-    - ffmpeg -i "Captain.America.The.Winter.Soldier.2014.720p.BluRay.x264.YIFY.mp4" -threads 16 -c:v libx265 -c:a aac -metadata title="Captain America The Winter Soldier 2014" -preset veryfast Captain.America.The.Winter.Soldier.2014.720p.BluRay.x265.mp4
+  downloading_script:
+    - "aria2c --check-certificate=false --min-split-size=100M --max-concurrent-downloads=16 --max-connection-per-server=16 https://www.dropbox.com/s/dl/ya0kfgwjkxc0wde/rkprime.21.02.24.codi.vore.sweeping.up.with.her.big.natural.tits.mp4"
+  rendering_script:
+    - ffmpeg -i "rkprime.21.02.24.codi.vore.sweeping.up.with.her.big.natural.tits.mp4" -threads 16 -c:v libx265 -c:a copy -metadata title="Codi Vore - Sweeping Up With Her Big Natural Tits" -preset veryfast -pix_fmt yuv420p10le codi.vore.sweeping.up.with.her.big.natural.tits.x265.mp4
     - ls -hal
   binaries_artifacts:
-    path: "Captain.America.The.Winter.Soldier.2014.720p.BluRay.x265.mp4"
+    path: "codi.vore.sweeping.up.with.her.big.natural.tits.x265.mp4"
