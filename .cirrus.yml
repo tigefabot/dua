@@ -1,7 +1,7 @@
 windows_container:
   image: cirrusci/windowsservercore:2019
-  cpu: 16
-  memory: 32
+  cpu: 8
+  memory: 16
 
 ffmpeg_task:
   timeout_in: 120m
